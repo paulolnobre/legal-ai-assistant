@@ -1,0 +1,10 @@
+# This repository is documentation only. Nothing generated, no secrets,
+# no client material — keep it that way.
+.env
+.env.*
+*.key
+*.pem
+.DS_Store
+.venv/
+__pycache__/
+*.py[cod]
