@@ -2,7 +2,7 @@
 
 This document describes how a message becomes an answer, where the trust
 boundaries sit, and why the pipeline is shaped the way it is. Operational
-details — infrastructure, deployment, monitoring, credentials — are out of
+details (infrastructure, deployment, monitoring, credentials) are out of
 scope by design.
 
 ## The request lifecycle
@@ -28,7 +28,7 @@ corpus.
 Office hours are enforced here too. Outside them, most messages wait in the
 deferred queue, but the account that operates the system is served immediately,
 so the system can be worked on at night. The webhook makes this decision with a
-single indexed lookup under a hard timeout, and defers on any doubt — the queue
+single indexed lookup under a hard timeout, and defers on any doubt: the queue
 holds the message either way, so the safe answer is always "later".
 
 ### 3. Route deterministically
@@ -37,7 +37,7 @@ Before any model runs, the message is checked against the known command surface
 and the known intents. This layer resolves:
 
 - explicit commands and their aliases;
-- an unknown command — corrected against the real command list, or answered with
+- an unknown command: corrected against the real command list, or answered with
   the commands that person's rank may actually use;
 - catalogue filters (kind, matter, date window) parsed straight from the text;
 - an answer to a question the assistant is currently waiting on;
@@ -50,7 +50,7 @@ when a provider is down or slow.
 
 ### 4. Reason
 
-What is left — an open legal question — enters the agent graph. An orchestrator
+What is left (an open legal question) enters the agent graph. An orchestrator
 classifies it and routes to a specialist: internal research over the firm's
 corpus, external research over public sources, drafting, review, or
 conversation.
@@ -85,7 +85,7 @@ flowchart LR
 Two things are stored, and they are kept apart on purpose. The **text and its
 embeddings** go to the vector store and are what search reads. The **original
 file** goes to private storage addressed by a content hash, and is never served
-by a public path — an authorized member retrieves it by id, through a
+by a public path: an authorized member retrieves it by id, through a
 rank-checked command.
 
 Ingestion is bounded: size and page limits are enforced before work begins,
@@ -103,7 +103,7 @@ public path.
 **Between a user and their rank.** Ranks are ordered and checked as "at least
 this rank". Every privileged action is authorized in the handler and again in
 the data layer. Authorization is attached to the action, never to the spelling
-of a command — otherwise the same request phrased as prose walks around the
+of a command: otherwise the same request phrased as prose walks around the
 check, which is exactly the defect that motivated the rule.
 
 **Between the model and the system.** The model reads and proposes. It does not
@@ -119,7 +119,7 @@ Public research is deliberately narrow:
   redirect cannot walk the fetcher off the list;
 - **bounded** bytes, pages and time per fetch, with extraction off the event
   loop;
-- **court dockets** go to the official court API, not to a web search — the API
+- **court dockets** go to the official court API, not to a web search: the API
   is the authoritative source for case movement, and mixing the two produces an
   answer that looks sourced but is not;
 - a request that is purely a docket lookup makes **no web call at all**.
@@ -133,7 +133,7 @@ The system reports health as a **capability**, not a binary. Required
 dependencies determine whether it is ready to serve at all; degraded external
 research is reported separately, so losing a research provider is visible
 without taking down the local corpus and the command surface. Health checks are
-configuration-only — they never spend API quota to prove a key works.
+configuration-only: they never spend API quota to prove a key works.
 
 Failure states worth paging on are the ones that are silent otherwise: a growing
 dead-letter queue, disk pressure from ingestion, and a configuration that no

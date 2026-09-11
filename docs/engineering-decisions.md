@@ -2,7 +2,7 @@
 
 Each entry states the decision, the failure it prevents, and what it cost. Where
 a decision came from a defect found in production or in review, that is said
-plainly — those are the ones worth reading.
+plainly: those are the ones worth reading.
 
 ---
 
@@ -12,8 +12,8 @@ plainly — those are the ones worth reading.
 user typed.
 
 **Why.** A rank restriction was applied to a command that returns an original
-document. Asking for the same thing in Portuguese prose — "send me the original
-file of document 2" — reached the same code path without the check, because the
+document. Asking for the same thing in Portuguese prose ("send me the original
+file of document 2") reached the same code path without the check, because the
 check lived on the command string. The natural-language route was never a
 second feature; it was a second door to the same room, and only one door was
 locked.
@@ -29,14 +29,14 @@ bug it removes is the class that matters.
 **Decision.** Ranks are ordered and checked as "at least this rank". A missing,
 unknown or corrupted role value resolves to the lowest rank.
 
-**Why.** The alternative — treating an unrecognised value as a default mid-tier
-role, or skipping the check when the value cannot be parsed — turns data damage
+**Why.** The alternative (treating an unrecognised value as a default mid-tier
+role, or skipping the check when the value cannot be parsed) turns data damage
 into privilege escalation. A record that has been corrupted is exactly the
 record you least want to trust.
 
 **Also.** Approving someone who already holds a rank preserves it. An earlier
 version overwrote the role on re-approval, so re-approving an existing
-administrator silently demoted them — a bug that was invisible until someone
+administrator silently demoted them: a bug that was invisible until someone
 noticed they had lost access they never gave up.
 
 ---
@@ -61,7 +61,7 @@ restored together.
 
 **Why.** They were stored separately once. A cache hit could then return a
 conclusion whose supporting sources had expired, so the answer arrived confident
-and unsupported — the exact failure mode this system exists to prevent. Storing
+and unsupported: the exact failure mode this system exists to prevent. Storing
 them apart made an invariant ("every answer carries its evidence") depend on two
 independent lifetimes agreeing.
 
@@ -78,8 +78,8 @@ answers. Including the source-policy fingerprint means that widening or
 narrowing the allowlist invalidates exactly the answers whose coverage changed,
 and nothing else.
 
-**And.** Anything time-sensitive — a docket lookup, a question asking what is
-current — bypasses the cache entirely. Freshness is decided from the user's
+**And.** Anything time-sensitive (a docket lookup, a question asking what is
+current) bypasses the cache entirely. Freshness is decided from the user's
 original wording, not from the rewritten query, because the rewrite can drop the
 very word that signalled urgency.
 
@@ -97,7 +97,7 @@ refusal to start, because it produces confident output from an unintended
 system.
 
 **The lesson that cost the most.** The first version of this check ran as a
-validator at module import. That made `import config` throw — which broke test
+validator at module import. That made `import config` throw, which broke test
 collection everywhere, and hid the very message that explained the problem.
 *Failing at startup* means when the application starts, not when a module is
 imported.
@@ -111,7 +111,7 @@ model, no hidden defaults.
 
 **Why.** A deadline is either right or it is malpractice. The legal regime is a
 required argument because a default would be silently wrong half the time, and
-only national holidays ship by default — inventing a local court holiday
+only national holidays ship by default: inventing a local court holiday
 produces a wrong date that looks exactly as authoritative as a right one.
 
 **Benefit.** It is exhaustively testable without a network, a database or a
